@@ -23,35 +23,14 @@ let cartSummaryHTML = '';
 
 cart.forEach((cartItem) => {
 
-  const productId = cartItem.productId;
+  const matchingProduct = products.find(product => product.id === cartItem.productId);
 
-  let matchingProduct;
+  const deliveryOption = deliveryOptions.find(option => option.id ===cartItem.deliveryOptionId);
 
-  products.forEach((product) => {
-   if (product.id === productId){
-    matchingProduct = product;
-   }
-  });
+  const deliveryDate = today.add(deliveryOption.deliveryDay, 'day');
+  const dateString = deliveryDate.format('dddd, MMM D');
 
-  const deliveryOptionId = cartItem.deliveryOptionId;
-
-  let deliveryOption;
-
-  deliveryOptions.forEach((option) => {
-    if (option.id === deliveryOptionId) {
-      deliveryOption = option;
-    }
-  });
-
-  const today = dayjs();
-  const deliveryDate = today.add(
-    deliveryOption.deliveryDay,
-    'days'
-  );
-  const dateString = deliveryDate.format(
-    'dddd, MMMM D'
-  );
-console.log(deliveryDate);
+ 
 
  cartSummaryHTML +=
 `
@@ -102,11 +81,11 @@ function deliveryOptionsHTML(matchingProduct, cartItem) {
   deliveryOptions.forEach((deliveryOption) => {
     const today = dayjs();
     const deliveryDate = today.add(
-      deliveryOption.deliveryDays,
+      deliveryOption.deliveryDay,
       'days'
     );
     const dateString = deliveryDate.format(
-      'dddd, MMMM D'
+      'dddd, MMM D'
     );
 
     const priceString = deliveryOption.priceCents === 0
