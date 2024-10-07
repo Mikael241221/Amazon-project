@@ -1,4 +1,5 @@
 import{formatCurrency} from '../scripts/utils/money.js';
+import { loadfromStorage } from './cart.js';
  
  export function getProduct(productId) {
 
@@ -104,10 +105,15 @@ export function loadProductsFetch() {
     console.log('load products');
   
     
+  }).catch((error) => {
+    console.log('Unexpected error. Please try again later.');
   });
-
+  
   return promise;
+  
 }
+
+
 /*
 loadProductsFetch().then(() => {
   console.log('next step');
@@ -128,9 +134,15 @@ export function loadProducts(fun) {
 
   fun();
  });
+
+ xhr.addEventListener('error', (error) => {
+console.log('Unexpected error. Please try again later.');
+ });
  xhr.open('GET', 'https://supersimplebackend.dev/products');
  xhr.send();
 }
+
+
 
 
 

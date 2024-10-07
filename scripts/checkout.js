@@ -5,16 +5,21 @@ import { loadCart, loadfromStorage } from '../data/cart.js';
 // import '../data/cart-class.js';
 // import '../data/backend-practice.js';
 async function loadPage() {
- 
-  await loadProductsFetch();
+  try{
+    // throw 'error1';
+    await loadProductsFetch();
+
+    const value = await new Promise((resolve, reject) => {
+      // throw 'error2';
+     loadCart(() => {
+       // reject('error');
+        resolve('value3');
+     });
+   });
+  }catch(error) {
+    console.log('Unexpected error. Please try again later.');
+  }
   
-   const value = await new Promise((resolve) => {
-    loadCart(() => {
-      resolve('value3');
-    });
-  });
-
-
   renderOrderSummary();
   renderPaymentSummary();
 
